@@ -2127,11 +2127,7 @@ status_t SurfaceFlinger::createNormalLayer(const sp<Client>& client,
         format = PIXEL_FORMAT_RGBA_8888;
         break;
     case PIXEL_FORMAT_OPAQUE:
-#ifdef NO_RGBX_8888
-        format = PIXEL_FORMAT_RGB_565;
-#else
         format = PIXEL_FORMAT_RGBX_8888;
-#endif
         break;
     }
 
