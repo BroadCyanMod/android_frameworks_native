@@ -41,6 +41,19 @@ ifeq ($(TARGET_ARCH),mips)
     LOCAL_CFLAGS += -mno-check-zero-division
 endif
 
+ifeq ($(ARCH_ARM_HAVE_TLS_REGISTER),true)
+    LOCAL_CFLAGS += -DHAVE_ARM_TLS_REGISTER
+    ifeq ($(TARGET_ARCH_VARIANT),armv6-vfp)
+        LOCAL_ARM_MODE := arm
+    endif
+endif
+
+ifeq ($(TARGET_ARCH)-$(ARCH_ARM_HAVE_TLS_REGISTER),arm-true)
+    LOCAL_CFLAGS += -DHAVE_ARM_TLS_REGISTER
+    ifeq ($(TARGET_ARCH_VARIANT),armv6-vfp)
+        LOCAL_ARM_MODE := arm
+    endif
+endif
 # we need to access the private Bionic header <bionic_tls.h>
 LOCAL_C_INCLUDES += bionic/libc/private
 

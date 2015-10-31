@@ -31,6 +31,12 @@ LOCAL_SRC_FILES:= 	       \
 	EGL/getProcAddress.cpp.arm \
 	EGL/Loader.cpp 	       \
 #
+ifeq ($(ARCH_ARM_HAVE_TLS_REGISTER),true)
+    LOCAL_CFLAGS += -DHAVE_ARM_TLS_REGISTER
+    ifeq ($(TARGET_ARCH_VARIANT),armv6-vfp)
+        LOCAL_ARM_MODE := arm
+    endif
+endif
 
 LOCAL_SHARED_LIBRARIES += libcutils libutils liblog libGLES_trace
 LOCAL_LDLIBS := -lpthread -ldl
@@ -44,6 +50,13 @@ LOCAL_CFLAGS += -DLOG_TAG=\"libEGL\"
 LOCAL_CFLAGS += -DGL_GLEXT_PROTOTYPES -DEGL_EGLEXT_PROTOTYPES
 LOCAL_CFLAGS += -fvisibility=hidden
 LOCAL_CFLAGS += -DEGL_TRACE=1
+
+ifeq ($(ARCH_ARM_HAVE_TLS_REGISTER),true)
+   LOCAL_CFLAGS += -DHAVE_ARM_TLS_REGISTER
+    ifeq ($(TARGET_ARCH_VARIANT),armv6-vfp)
+        LOCAL_ARM_MODE := arm
+    endif
+endif
 
 ifeq ($(BOARD_ALLOW_EGL_HIBERNATION),true)
   LOCAL_CFLAGS += -DBOARD_ALLOW_EGL_HIBERNATION
@@ -90,12 +103,27 @@ LOCAL_LDLIBS := -lpthread -ldl
 LOCAL_MODULE:= libGLESv1_CM
 
 LOCAL_SHARED_LIBRARIES += libdl
+
+ifeq ($(ARCH_ARM_HAVE_TLS_REGISTER),true)
+   LOCAL_CFLAGS += -DHAVE_ARM_TLS_REGISTER
+    ifeq ($(TARGET_ARCH_VARIANT),armv6-vfp)
+        LOCAL_ARM_MODE := arm
+    endif
+endif
+
 # we need to access the private Bionic header <bionic_tls.h>
 LOCAL_C_INCLUDES += bionic/libc/private
 
 LOCAL_CFLAGS += -DLOG_TAG=\"libGLESv1\"
 LOCAL_CFLAGS += -DGL_GLEXT_PROTOTYPES -DEGL_EGLEXT_PROTOTYPES
 LOCAL_CFLAGS += -fvisibility=hidden
+
+ifeq ($(ARCH_ARM_HAVE_TLS_REGISTER),true)
+   LOCAL_CFLAGS += -DHAVE_ARM_TLS_REGISTER
+    ifeq ($(TARGET_ARCH_VARIANT),armv6-vfp)
+        LOCAL_ARM_MODE := arm
+    endif
+endif
 
 include $(BUILD_SHARED_LIBRARY)
 
@@ -115,12 +143,27 @@ LOCAL_LDLIBS := -lpthread -ldl
 LOCAL_MODULE:= libGLESv2
 
 LOCAL_SHARED_LIBRARIES += libdl
+
+ifeq ($(ARCH_ARM_HAVE_TLS_REGISTER),true)
+   LOCAL_CFLAGS += -DHAVE_ARM_TLS_REGISTER
+    ifeq ($(TARGET_ARCH_VARIANT),armv6-vfp)
+        LOCAL_ARM_MODE := arm
+    endif
+endif
+
 # we need to access the private Bionic header <bionic_tls.h>
 LOCAL_C_INCLUDES += bionic/libc/private
 
 LOCAL_CFLAGS += -DLOG_TAG=\"libGLESv2\"
 LOCAL_CFLAGS += -DGL_GLEXT_PROTOTYPES -DEGL_EGLEXT_PROTOTYPES
 LOCAL_CFLAGS += -fvisibility=hidden
+
+ifeq ($(ARCH_ARM_HAVE_TLS_REGISTER),true)
+   LOCAL_CFLAGS += -DHAVE_ARM_TLS_REGISTER
+    ifeq ($(TARGET_ARCH_VARIANT),armv6-vfp)
+        LOCAL_ARM_MODE := arm
+    endif
+endif
 
 include $(BUILD_SHARED_LIBRARY)
 
